@@ -45,15 +45,12 @@ export default class CallApi {
     //   primary_release_year: primary_release_year
     // }
 
-    return fetchApi(
-      `${API_URL}${url}?${queryString.stringify(queryStringParams)}`,
-      {
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json"
-        }
+    return fetchApi(`${API_URL}${url}?${queryString.stringify(queryStringParams)}`, {
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json"
       }
-    );
+    });
   }
   static post(url, options = {}) {
     const { params = {}, body = {} } = options;
@@ -62,17 +59,14 @@ export default class CallApi {
       ...params
     };
 
-    return fetchApi(
-      `${API_URL}${url}?${queryString.stringify(queryStringParams)}`,
-      {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-      }
-    );
+    return fetchApi(`${API_URL}${url}?${queryString.stringify(queryStringParams)}`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
   }
   static delete(url, options = {}) {
     const { params = {}, body = {} } = options;
@@ -80,16 +74,13 @@ export default class CallApi {
       api_key: API_KEY_3,
       ...params
     };
-    return fetchApi(
-      `${API_URL}${url}?${queryString.stringify(queryStringParams)}`,
-      {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-      }
-    );
+    return fetchApi(`${API_URL}${url}?${queryString.stringify(queryStringParams)}`, {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
   }
 }
