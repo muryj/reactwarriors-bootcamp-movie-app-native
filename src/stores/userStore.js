@@ -23,6 +23,11 @@ class UserStore {
   };
 
   @action
+  toggleSubmitButton = () => {
+    Actions.movies();
+  }
+
+  @action
   updateAuth = (user, session_id) => {
     this.user = user;
     this.session_id = session_id;

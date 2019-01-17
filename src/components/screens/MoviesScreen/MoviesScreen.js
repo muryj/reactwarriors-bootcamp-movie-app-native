@@ -5,8 +5,7 @@ import {
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import MovieItem from './MovieItem';
-import Filters from './Filters';
-import YearRelease from './YearRelease';
+import AppHeader from '../../shared/AppHeader';
 
 
 @inject('moviesPageStore', 'userStore')
@@ -19,7 +18,7 @@ class MoviesScreen extends React.Component {
   render() {
     const {
       moviesPageStore: {
-        page, isLoading, movies, onClearFilters, nextPage, prevPage,
+        page, isLoading, movies, onClearFilters, nextPage, prevPage, toggleFilters,
       },
       userStore: {
         toggleLoginButton,
@@ -29,14 +28,16 @@ class MoviesScreen extends React.Component {
     return (
 
       <View style={styles.container}>
-
+        <AppHeader />
         <View style={styles.filtersList}>
-
-          <Filters />
-          <YearRelease />
           <Button
             onPress={toggleLoginButton}
             title="Login"
+            color="red"
+          />
+          <Button
+            onPress={toggleFilters}
+            title="Filters"
             color="red"
           />
         </View>

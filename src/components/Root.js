@@ -6,6 +6,7 @@ import { userStore } from '../stores/userStore';
 import { loginStore } from '../stores/loginStore';
 import MoviesScreen from './screens/MoviesScreen/MoviesScreen';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
+import FiltersScreen from './screens/FiltersScreen/FiltersScreen';
 
 class Root extends React.Component {
   render() {
@@ -13,8 +14,9 @@ class Root extends React.Component {
       <Provider moviesPageStore={moviesPageStore} userStore={userStore} loginStore={loginStore}>
         <Router>
           <Stack key="root">
-            <Scene key="movies" component={MoviesScreen} />
             <Scene key="login" component={LoginScreen} title="Login" />
+            <Scene key="movies" component={MoviesScreen} />
+            <Scene key="filters" component={FiltersScreen} />
           </Stack>
         </Router>
       </Provider>

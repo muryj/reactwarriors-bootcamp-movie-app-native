@@ -6,7 +6,7 @@ import {
 import { inject, observer } from 'mobx-react';
 
 
-@inject('loginStore')
+@inject('loginStore', 'userStore')
 @observer
 class LoginScreen extends React.Component {
   render() {
@@ -17,8 +17,11 @@ class LoginScreen extends React.Component {
         handleBlur,
         username,
         password,
-        repeatPassword,
+        errors,
 
+      },
+      userStore: {
+        toggleSubmitButton,
       },
     } = this.props;
     return (
@@ -27,26 +30,32 @@ class LoginScreen extends React.Component {
         <FormInput
           placeholder="Пользователь"
           value={username}
-          onChange={onChangeInput(username)}
-          onBlur={handleBlur}
+          onChangeText={(inputValue) => {
+            onChangeInput({ name: 'username', value: inputValue });
+          }}
+          onBlur={() => {
+            handleBlur();
+          }}
         />
-        <FormValidationMessage>Error message</FormValidationMessage>
+        {errors.username && (
+          <FormValidationMessage>{errors.username}</FormValidationMessage>
+        )}
+
         <FormLabel>Password</FormLabel>
         <FormInput
           placeholder="Пользователь"
           value={password}
-          onChangeText={onChangeInput}
-          onBlur={handleBlur}
+          onChangeText={(inputValue) => {
+            onChangeInput({ name: 'password', value: inputValue });
+          }}
+          onBlur={() => {
+            handleBlur();
+          }}
         />
-        <FormValidationMessage>Error message</FormValidationMessage>
-        <FormLabel>Repeat Password</FormLabel>
-        <FormInput
-          placeholder="Пользователь"
-          value={repeatPassword}
-          onChangeText={onChangeInput}
-          onBlur={handleBlur}
-        />
-        <FormValidationMessage>Error message</FormValidationMessage>
+        {errors.password && (
+          <FormValidationMessage>{errors.password}</FormValidationMessage>
+        )}
+
         <Button
           large
           rightIcon={{ name: 'done' }}
@@ -54,6 +63,16 @@ class LoginScreen extends React.Component {
           color="green"
           onPress={onLogin}
         />
+        <Button
+          large
+          rightIcon={{ name: 'done' }}
+          title="Skip"
+          color="green"
+          onPress={toggleSubmitButton}
+        />
+        {errors.base && (
+        <FormValidationMessage>{errors.base}</FormValidationMessage>
+        )}
       </View>
     );
   }

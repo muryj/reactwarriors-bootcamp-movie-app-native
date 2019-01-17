@@ -7,15 +7,12 @@ class LoginStore {
 
   @observable password = 'jekanator96';
 
-  @observable repeatPassword = 'jekanator96';
-
   @observable submitting = false;
 
   @observable
   errors = {
     username: false,
     password: false,
-    repeatPassword: false,
     base: false,
   };
 
@@ -29,30 +26,26 @@ class LoginStore {
     if (this.password === '') {
       this.errors.password = 'Not empty';
     }
-    if (this.password !== this.repeatPassword && this.password !== '') {
-      this.errors.repeatPassword = 'You must provide equal passwords';
-    }
     return errors;
   };
 
   @action
-  onChangeInput = (inputValue) => {
-    this[inputValue] = inputValue;
-    this.errors[inputValue] = null;
+  onChangeInput = ({ name, value }) => {
+    this[name] = value;
+    this.errors[name] = null;
     this.errors.base = null;
   };
 
   @action
-  handleBlur = (event) => {
-    const errors = this.validateFields(event.target.name);
+  handleBlur = () => {
+    const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
       this.errors = errors;
     }
   };
 
   @action
-  onLogin = (event) => {
-    event.preventDefault();
+  onLogin = () => {
     const errors = this.validateFields();
     if (Object.keys(errors).length > 0) {
       this.errors = errors;
@@ -93,7 +86,7 @@ class LoginStore {
       })
       .then((data) => {
         userStore.updateAuth(data.user, data.session_id);
-        userStore.toggleModal();
+        userStore.toggleSubmitButton();
       })
       .catch((error) => {
         this.submitting = false;
