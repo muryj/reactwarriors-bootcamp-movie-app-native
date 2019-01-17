@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import YearRelease from './YearRelease';
 import Filters from './Filters';
+import Genres from './Genres';
 
 class FiltersScreen extends React.Component {
   render() {
@@ -9,12 +10,9 @@ class FiltersScreen extends React.Component {
       <View
         style={styles.container}
       >
-        <Filters
-          style={{ marginBottom: 20 }}
-        />
-        <YearRelease
-          style={{ marginBottom: 20 }}
-        />
+        <Filters />
+        <YearRelease />
+        <Genres />
       </View>
     );
   }
@@ -27,7 +25,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 20,
     marginRight: 10,
-    justifyContent: 'flex-start',
     flexDirection: 'column',
+    justifyContent: 'space-between',
   },
 });
