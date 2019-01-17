@@ -1,7 +1,7 @@
-import React from "react";
-import { Provider } from "mobx-react";
-import { moviesPageStore } from "../stores/moviesPageStore";
-import MoviesScreen from "./screens/MoviesScreen/MoviesScreen";
+import React from 'react';
+import { Provider } from 'mobx-react';
+import { moviesPageStore } from '../stores/moviesPageStore';
+import MoviesScreen from './screens/MoviesScreen/MoviesScreen';
 
 class Root extends React.Component {
   render() {
