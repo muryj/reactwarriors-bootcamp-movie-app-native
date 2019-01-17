@@ -18,29 +18,14 @@ class MoviesScreen extends React.Component {
   render() {
     const {
       moviesPageStore: {
-        page, isLoading, movies, onClearFilters, nextPage, prevPage, toggleFilters,
-      },
-      userStore: {
-        toggleLoginButton,
+        page, isLoading, movies, onClearFilters, nextPage, prevPage,
       },
     } = this.props;
-    // console.log("movies", toJS(movies));
+
     return (
 
       <View style={styles.container}>
         <AppHeader />
-        <View style={styles.filtersList}>
-          <Button
-            onPress={toggleLoginButton}
-            title="Login"
-            color="red"
-          />
-          <Button
-            onPress={toggleFilters}
-            title="Filters"
-            color="red"
-          />
-        </View>
 
 
         <View style={styles.listItems}>
@@ -59,24 +44,34 @@ class MoviesScreen extends React.Component {
         <View style={styles.paginationButtons}>
           <View>
             <Button
+              icon={{ name: 'ban', type: 'font-awesome' }}
               style={styles.paginationButton}
               onPress={onClearFilters}
               title="Clear Filters"
-              color="red"
+              buttonStyle={{
+                borderRadius: 20, width: 130,
+              }}
             />
           </View>
           <Button
+            icon={{ name: 'arrow-left', type: 'font-awesome' }}
             style={styles.paginationButton}
             onPress={prevPage}
-            title="Previous Page"
-            color="green"
+            title="Previous"
             disabled={page === 1}
+            buttonStyle={{
+              borderRadius: 20, width: 130,
+            }}
+
           />
           <Button
+            icon={{ name: 'arrow-right', type: 'font-awesome' }}
             style={styles.paginationButton}
             onPress={nextPage}
-            title="Next Page"
-            color="green"
+            title="Next"
+            buttonStyle={{
+              borderRadius: 20, width: 130,
+            }}
           />
 
         </View>
@@ -94,16 +89,16 @@ const styles = StyleSheet.create({
   },
 
   listItems: {
-    flex: 2,
+    flex: 6,
     width: '100%',
     margin: 20,
   },
   paginationButtons: {
     flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  paginationButton: {
-    marginRight: 1,
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: -10,
+    height: 50,
   },
 });
 

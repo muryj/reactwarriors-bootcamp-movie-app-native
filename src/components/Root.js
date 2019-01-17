@@ -14,9 +14,9 @@ class Root extends React.Component {
       <Provider moviesPageStore={moviesPageStore} userStore={userStore} loginStore={loginStore}>
         <Router>
           <Stack key="root">
+            <Scene key="movies" component={MoviesScreen} title="Movies" />
             <Scene key="login" component={LoginScreen} title="Login" />
-            <Scene key="movies" component={MoviesScreen} />
-            <Scene key="filters" component={FiltersScreen} />
+            <Scene key="filters" component={FiltersScreen} title="Filter" />
           </Stack>
         </Router>
       </Provider>

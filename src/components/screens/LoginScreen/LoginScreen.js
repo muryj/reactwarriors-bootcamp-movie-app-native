@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import {
   FormLabel, FormInput, FormValidationMessage, Button,
 } from 'react-native-elements';
@@ -20,61 +20,93 @@ class LoginScreen extends React.Component {
         errors,
 
       },
-      userStore: {
-        toggleSubmitButton,
-      },
+
     } = this.props;
     return (
-      <View>
-        <FormLabel>Login</FormLabel>
-        <FormInput
-          placeholder="Пользователь"
-          value={username}
-          onChangeText={(inputValue) => {
-            onChangeInput({ name: 'username', value: inputValue });
-          }}
-          onBlur={() => {
-            handleBlur();
-          }}
-        />
-        {errors.username && (
-          <FormValidationMessage>{errors.username}</FormValidationMessage>
-        )}
+      <View style={styles.container}>
 
-        <FormLabel>Password</FormLabel>
-        <FormInput
-          placeholder="Пользователь"
-          value={password}
-          onChangeText={(inputValue) => {
-            onChangeInput({ name: 'password', value: inputValue });
-          }}
-          onBlur={() => {
-            handleBlur();
-          }}
-        />
-        {errors.password && (
-          <FormValidationMessage>{errors.password}</FormValidationMessage>
-        )}
+        <View style={styles.form}>
 
-        <Button
-          large
-          rightIcon={{ name: 'done' }}
-          title="Submit"
-          color="green"
-          onPress={onLogin}
-        />
-        <Button
-          large
-          rightIcon={{ name: 'done' }}
-          title="Skip"
-          color="green"
-          onPress={toggleSubmitButton}
-        />
-        {errors.base && (
-        <FormValidationMessage>{errors.base}</FormValidationMessage>
-        )}
+          <View>
+            <FormLabel>Login</FormLabel>
+            <FormInput
+
+              placeholder="Пользователь"
+              value={username}
+              onChangeText={(inputValue) => {
+                onChangeInput({ name: 'username', value: inputValue });
+              }}
+              onBlur={() => {
+                handleBlur();
+              }}
+            />
+            {errors.username && (
+            <FormValidationMessage>{errors.username}</FormValidationMessage>
+            )}
+          </View>
+
+          <View>
+            <FormLabel>Password</FormLabel>
+            <FormInput
+
+              placeholder="Пользователь"
+              value={password}
+              onChangeText={(inputValue) => {
+                onChangeInput({ name: 'password', value: inputValue });
+              }}
+              onBlur={() => {
+                handleBlur();
+              }}
+            />
+            {errors.password && (
+            <FormValidationMessage>{errors.password}</FormValidationMessage>
+            )}
+          </View>
+
+
+        </View>
+
+        <View>
+          <Button
+            icon={{ name: 'check', type: 'font-awesome' }}
+            title="Submit"
+            onPress={onLogin}
+            buttonStyle={{
+              borderRadius: 20, width: 300, height: 50, marginTop: 20,
+            }}
+          />
+        </View>
+
+
+        <View
+          style={styles.baseError}
+        >
+          {errors.base && (
+          <FormValidationMessage>{errors.base}</FormValidationMessage>
+          )}
+        </View>
+
       </View>
     );
   }
 }
 export default LoginScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  form: {
+    flex: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    width: 400,
+  },
+  baseError: {
+    flex: 1,
+  },
+
+});
