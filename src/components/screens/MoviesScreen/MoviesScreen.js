@@ -9,7 +9,7 @@ import Filters from './Filters';
 import YearRelease from './YearRelease';
 
 
-@inject('moviesPageStore')
+@inject('moviesPageStore', 'userStore')
 @observer
 class MoviesScreen extends React.Component {
   componentDidMount() {
@@ -21,6 +21,9 @@ class MoviesScreen extends React.Component {
       moviesPageStore: {
         page, isLoading, movies, onClearFilters, nextPage, prevPage,
       },
+      userStore: {
+        toggleLoginButton,
+      },
     } = this.props;
     // console.log("movies", toJS(movies));
     return (
@@ -31,6 +34,11 @@ class MoviesScreen extends React.Component {
 
           <Filters />
           <YearRelease />
+          <Button
+            onPress={toggleLoginButton}
+            title="Login"
+            color="red"
+          />
         </View>
 
 
@@ -80,7 +88,6 @@ class MoviesScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   paginationButton: {
-    marginRight: 2,
+    marginRight: 1,
   },
 });
 

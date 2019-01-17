@@ -13,7 +13,7 @@ class Root extends React.Component {
       <Provider moviesPageStore={moviesPageStore} userStore={userStore} loginStore={loginStore}>
         <Router>
           <Stack key="root">
-            <Scene key="movies" component={MoviesScreen} title="Movies" />
+            <Scene key="movies" component={MoviesScreen} />
             <Scene key="login" component={LoginScreen} title="Login" />
           </Stack>
         </Router>

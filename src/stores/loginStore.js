@@ -20,7 +20,7 @@ class LoginStore {
   };
 
   @action
-  validateFields = (event) => {
+  validateFields = () => {
     const errors = {};
 
     if (this.username === '') {
@@ -36,9 +36,9 @@ class LoginStore {
   };
 
   @action
-  onChange = (event) => {
-    this[event.target.name] = event.target.value;
-    this.errors[event.target.name] = null;
+  onChangeInput = (inputValue) => {
+    this[inputValue] = inputValue;
+    this.errors[inputValue] = null;
     this.errors.base = null;
   };
 
@@ -96,7 +96,6 @@ class LoginStore {
         userStore.toggleModal();
       })
       .catch((error) => {
-        console.log('error', error);
         this.submitting = false;
         this.errors.base = error.status_message;
       });

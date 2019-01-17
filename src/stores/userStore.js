@@ -1,8 +1,6 @@
 import { observable, action, computed } from 'mobx';
-import Cookies from 'universal-cookie';
+import { Actions } from 'react-native-router-flux';
 import CallApi from '../api/api';
-
-const cookies = new Cookies();
 
 class UserStore {
   @observable user = {};
@@ -20,16 +18,12 @@ class UserStore {
   }
 
   @action
-  toggleModal = () => {
-    this.showLoginModal = !this.showLoginModal;
+  toggleLoginButton = () => {
+    Actions.login();
   };
 
   @action
   updateAuth = (user, session_id) => {
-    cookies.set('session_id', session_id, {
-      path: '/',
-      maxAge: 2592000,
-    });
     this.user = user;
     this.session_id = session_id;
   };
@@ -41,17 +35,13 @@ class UserStore {
 
   @action
   updateSessionId = (session_id) => {
-    cookies.set('session_id', session_id, {
-      path: '/',
-      maxAge: 2592000,
-    });
     this.session_id = session_id;
   };
 
   @action
   getUser = () => {
     this.isLoading = true;
-    const session_id = cookies.get('session_id');
+    const session_id = 'cookies';
     if (session_id) {
       CallApi.get('/account', {
         params: {
@@ -70,7 +60,6 @@ class UserStore {
         session_id: this.session_id,
       },
     }).then((data) => {
-      cookies.remove('session_id', { path: '/' });
       this.user = {};
       this.session_id = {};
       this.favoriteMovies = [];
