@@ -4,7 +4,6 @@ import {
   StyleSheet, View, ActivityIndicator, FlatList,
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import PropTypes from 'prop-types';
 import MovieItem from './MovieItem';
 import Filters from './Filters';
 import YearRelease from './YearRelease';
@@ -100,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { MoviesScreen };
+export default MoviesScreen;
