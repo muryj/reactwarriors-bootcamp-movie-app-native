@@ -1,15 +1,29 @@
 import React from 'react';
 import {
-  View, Image, StyleSheet,
+  View, Image, StyleSheet, TouchableOpacity, Text,
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
-import { black } from 'ansi-colors';
-
+import Menu, { MenuItem } from 'react-native-material-menu';
 
 @inject('userStore', 'moviesPageStore')
 @observer
 class AppHeader extends React.Component {
+  menu = null;
+
+  setMenuRef = (ref) => {
+    this.menu = ref;
+  };
+
+  Logout = () => {
+    this.menu.hide();
+    this.props.userStore.onLogout();
+  };
+
+  showMenu = () => {
+    this.menu.show();
+  };
+
   render() {
     const {
       userStore: {
@@ -22,7 +36,10 @@ class AppHeader extends React.Component {
       },
     } = this.props;
     return (
+
+
       <View style={styles.container}>
+
 
         <Button
           icon={{ name: 'filter', type: 'font-awesome' }}
@@ -35,15 +52,23 @@ class AppHeader extends React.Component {
         />
 
         {isAuth && (
-          <Image
-            source={{
-              uri: `https://secure.gravatar.com/avatar/${
-                user.avatar.gravatar.hash
-              }.jpg?s=64"`,
+          <TouchableOpacity onPress={this.showMenu}>
+            <Image
+              source={{
+                uri: `https://secure.gravatar.com/avatar/${
+                  user.avatar.gravatar.hash
+                }.jpg?s=64"`,
 
-            }}
-            style={styles.loginImage}
-          />
+              }}
+              style={styles.loginImage}
+            />
+            <Menu
+              ref={this.setMenuRef}
+              button={<Text />}
+            >
+              <MenuItem onPress={this.Logout}>Logout</MenuItem>
+            </Menu>
+          </TouchableOpacity>
         ) || (
         <Button
           icon={{ name: 'sign-in', type: 'font-awesome' }}

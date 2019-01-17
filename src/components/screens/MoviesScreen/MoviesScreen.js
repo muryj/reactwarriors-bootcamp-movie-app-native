@@ -27,7 +27,6 @@ class MoviesScreen extends React.Component {
       <View style={styles.container}>
         <AppHeader />
 
-
         <View style={styles.listItems}>
           {isLoading ? (
             <ActivityIndicator size="large" color="#0000ff" />

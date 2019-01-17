@@ -5,7 +5,6 @@ import {
 } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
 
-
 @inject('loginStore', 'userStore')
 @observer
 class LoginScreen extends React.Component {

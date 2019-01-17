@@ -19,6 +19,8 @@ class MovieItem extends React.Component {
           resizeMode="cover"
           source={{ uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}` }}
         />
+
+
         <Button
 
           icon={<Icon name="visibility" color="#ffffff" />}
@@ -28,6 +30,7 @@ class MovieItem extends React.Component {
           }}
           title="Детально"
         />
+
       </Card>
     );
   }
