@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckBox } from 'react-native-elements';
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
 import { inject, observer } from 'mobx-react';
 
 @inject('moviesPageStore')
@@ -13,16 +13,20 @@ class Genres extends React.Component {
   render() {
     const {
       moviesPageStore: {
-        resetGenres, genresList, onChangeGenres, filters,
+        genresList, checkboxChecked,
       },
     } = this.props;
-    console.log(genresList);
     return (
       <FlatList
         showsVerticalScrollIndicator={false}
         data={genresList}
         keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => (
+          <CheckBox
+            title={item.name}
+            checked={checkboxChecked}
+          />
+        )}
       />
     );
   }

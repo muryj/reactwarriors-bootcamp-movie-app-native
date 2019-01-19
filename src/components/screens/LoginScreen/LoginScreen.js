@@ -1,23 +1,34 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { reaction } from 'mobx';
+import { View, StyleSheet, Vibration } from 'react-native';
 import {
   FormLabel, FormInput, FormValidationMessage, Button,
 } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
+import * as Animatable from 'react-native-animatable';
 
 @inject('loginStore', 'userStore')
 @observer
 class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.buttonSubmitRef = React.createRef();
+
+    reaction(() => props.loginStore.hasError, () => {
+      this.buttonSubmitRef.current.shake(1000);
+    });
+  }
+
   render() {
     const {
       loginStore: {
-        onLogin,
         onChangeInput,
         handleBlur,
         username,
         password,
         errors,
-
+        onLogin,
       },
 
     } = this.props;
@@ -65,7 +76,9 @@ class LoginScreen extends React.Component {
 
         </View>
 
-        <View>
+        <Animatable.View
+          ref={this.buttonSubmitRef}
+        >
           <Button
             icon={{ name: 'check', type: 'font-awesome' }}
             title="Submit"
@@ -74,7 +87,7 @@ class LoginScreen extends React.Component {
               borderRadius: 20, width: 300, height: 50, marginTop: 20,
             }}
           />
-        </View>
+        </Animatable.View>
 
 
         <View

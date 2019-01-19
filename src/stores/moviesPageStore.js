@@ -38,6 +38,8 @@ class MoviesPageStore {
 
   @observable page = 1;
 
+  @observable checkboxChecked = true;
+
   @observable total_pages = '';
 
   @observable movies = [];
@@ -69,17 +71,8 @@ class MoviesPageStore {
   };
 
   @action
-  onChangeGenres = (event) => {
-    this.onChangeFilters({
-      target: {
-        name: 'with_genres',
-        value: event.target.checked
-          ? [...this.filters.with_genres, event.target.value]
-          : this.filters.with_genres.filter(
-            genre => genre !== event.target.value,
-          ),
-      },
-    });
+  onChangeGenres = () => {
+    this.checkboxChecked = false;
   };
 
   @action
@@ -142,6 +135,7 @@ class MoviesPageStore {
       },
     });
   };
+
 
   @action
   nextPage = () => {

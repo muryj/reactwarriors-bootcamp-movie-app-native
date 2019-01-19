@@ -4,6 +4,7 @@ import {
   StyleSheet, View, ActivityIndicator, FlatList,
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
+import * as Animatable from 'react-native-animatable';
 import MovieItem from './MovieItem';
 import AppHeader from '../../shared/AppHeader';
 
@@ -15,10 +16,18 @@ class MoviesScreen extends React.Component {
     this.props.moviesPageStore.getMovies();
   }
 
+  handleViewRef = ref => (this.view = ref);
+
+  onClearFiltersWithBounce = () => {
+    this.props.moviesPageStore.onClearFilters();
+    this.view.bounce(900);
+  }
+
+
   render() {
     const {
       moviesPageStore: {
-        page, isLoading, movies, onClearFilters, nextPage, prevPage,
+        page, isLoading, movies, nextPage, prevPage,
       },
     } = this.props;
 
@@ -41,17 +50,19 @@ class MoviesScreen extends React.Component {
         </View>
 
         <View style={styles.paginationButtons}>
-          <View>
+          <Animatable.View
+            ref={this.handleViewRef}
+          >
             <Button
               icon={{ name: 'ban', type: 'font-awesome' }}
               style={styles.paginationButton}
-              onPress={onClearFilters}
+              onPress={this.onClearFiltersWithBounce}
               title="Clear Filters"
               buttonStyle={{
                 borderRadius: 20, width: 130,
               }}
             />
-          </View>
+          </Animatable.View>
           <Button
             icon={{ name: 'arrow-left', type: 'font-awesome' }}
             style={styles.paginationButton}
@@ -85,6 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 20,
   },
 
   listItems: {

@@ -1,4 +1,6 @@
-import { observable, action } from 'mobx';
+import {
+  observable, action, computed, values,
+} from 'mobx';
 import CallApi from '../api/api';
 import { userStore } from './userStore';
 
@@ -10,21 +12,22 @@ class LoginStore {
   @observable submitting = false;
 
   @observable
-  errors = {
-    username: false,
-    password: false,
-    base: false,
-  };
+  errors = {};
+
+  @computed
+  get hasError() {
+    return values(this.errors).some(error => Boolean(error));
+  }
 
   @action
   validateFields = () => {
     const errors = {};
 
     if (this.username === '') {
-      this.errors.username = 'Not empty';
+      errors.username = 'Not empty';
     }
     if (this.password === '') {
-      this.errors.password = 'Not empty';
+      errors.password = 'Not empty';
     }
     return errors;
   };
@@ -37,11 +40,16 @@ class LoginStore {
   };
 
   @action
+  ClearErrors = () => {
+    this.errors = {};
+  }
+
+  @action
   handleBlur = () => {
-    const errors = this.validateFields();
-    if (Object.keys(errors).length > 0) {
-      this.errors = errors;
-    }
+    // const errors = this.validateFields();
+    // if (Object.keys(errors).length > 0) {
+    //   this.errors = errors;
+    // }
   };
 
   @action
