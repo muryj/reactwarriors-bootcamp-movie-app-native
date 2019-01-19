@@ -1,5 +1,6 @@
 import { observable, action, computed } from 'mobx';
 import { Actions } from 'react-native-router-flux';
+import { AsyncStorage } from 'react-native';
 import CallApi from '../api/api';
 
 class UserStore {

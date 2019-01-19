@@ -1,5 +1,5 @@
 import React from 'react';
-import { reaction } from 'mobx';
+import { reaction, values } from 'mobx';
 import { View, StyleSheet, Vibration } from 'react-native';
 import {
   FormLabel, FormInput, FormValidationMessage, Button,
@@ -14,11 +14,17 @@ class LoginScreen extends React.Component {
     super(props);
 
     this.buttonSubmitRef = React.createRef();
-
-    reaction(() => props.loginStore.hasError, () => {
-      this.buttonSubmitRef.current.shake(1000);
+    reaction(() => values(props.loginStore.errors), () => {
+      if (props.loginStore.hasError) {
+        this.buttonSubmitRef.current.shake(1000);
+        Vibration.vibrate(200);
+      }
     });
   }
+
+  // onLogin = () => {
+  //   if (this.props.loginStore.hasError)
+  // }
 
   render() {
     const {

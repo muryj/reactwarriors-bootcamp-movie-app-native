@@ -40,16 +40,16 @@ class LoginStore {
   };
 
   @action
-  ClearErrors = () => {
+  clearErrors = () => {
     this.errors = {};
   }
 
   @action
   handleBlur = () => {
-    // const errors = this.validateFields();
-    // if (Object.keys(errors).length > 0) {
-    //   this.errors = errors;
-    // }
+    const errors = this.validateFields();
+    if (Object.keys(errors).length > 0) {
+      this.errors = errors;
+    }
   };
 
   @action
@@ -98,7 +98,7 @@ class LoginStore {
       })
       .catch((error) => {
         this.submitting = false;
-        this.errors.base = error.status_message;
+        this.errors = { ...this.errors, base: error.status_message };
       });
   };
 }
