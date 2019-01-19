@@ -12,7 +12,6 @@ import * as Animatable from 'react-native-animatable';
 class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
-
     this.buttonSubmitRef = React.createRef();
     reaction(() => values(props.loginStore.errors), () => {
       if (props.loginStore.hasError) {
@@ -21,6 +20,7 @@ class LoginScreen extends React.Component {
       }
     });
   }
+
 
   // onLogin = () => {
   //   if (this.props.loginStore.hasError)

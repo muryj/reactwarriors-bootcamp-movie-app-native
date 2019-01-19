@@ -55,12 +55,15 @@ class LoginStore {
   @action
   onLogin = () => {
     const errors = this.validateFields();
+
     if (Object.keys(errors).length > 0) {
       this.errors = errors;
     } else {
       this.chainPromises();
     }
   };
+
+
 
   @action
   chainPromises = () => {

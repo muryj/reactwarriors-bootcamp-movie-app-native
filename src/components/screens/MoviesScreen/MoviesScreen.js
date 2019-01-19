@@ -14,6 +14,7 @@ import AppHeader from '../../shared/AppHeader';
 class MoviesScreen extends React.Component {
   componentDidMount() {
     this.props.moviesPageStore.getMovies();
+    this.props.userStore.getUserFromStore();
   }
 
   handleViewRef = ref => (this.view = ref);
