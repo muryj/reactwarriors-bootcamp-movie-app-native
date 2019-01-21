@@ -33,6 +33,8 @@ class AppHeader extends React.Component {
       },
       moviesPageStore: {
         toggleFilters,
+        page,
+        total_pages,
       },
     } = this.props;
     return (
@@ -50,7 +52,15 @@ class AppHeader extends React.Component {
           title="Filters"
 
         />
-
+        <View>
+          <Text>
+            {page}
+            {' '}
+              of
+            {' '}
+            {total_pages}
+          </Text>
+        </View>
         {isAuth && (
           <TouchableOpacity onPress={this.showMenu}>
             <Image

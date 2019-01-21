@@ -11,7 +11,7 @@ class MovieItem extends React.Component {
       <Card
         style={styles.constainer}
         title={item.title}
-
+        borderRadius={20}
 
       >
         <Image
