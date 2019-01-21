@@ -14,7 +14,6 @@ class MoviesPageStore {
     reaction(
       () => this.filters.with_genres.length,
       () => {
-        console.log(this.filters.sort_by);
         this.onChangePagination({ page: 1 });
         this.getMovies();
       },
@@ -22,7 +21,7 @@ class MoviesPageStore {
     reaction(
       () => values(this.filters),
       () => {
-        console.log(this.filters.sort_by);
+
         this.onChangePagination({ page: 1 });
         this.getMovies();
       },
