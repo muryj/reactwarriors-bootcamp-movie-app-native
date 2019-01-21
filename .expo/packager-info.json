@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 32898,
   "expoServerNgrokUrl": "https://jw-2bu.anonymous.reactwarriors-bootcamp-movie-app-native.exp.direct",
   "packagerNgrokUrl": "https://packager.jw-2bu.anonymous.reactwarriors-bootcamp-movie-app-native.exp.direct",
-  "ngrokPid": 31207
+  "ngrokPid": 32912
 }

@@ -2,129 +2,28 @@ import React from 'react';
 import { Button } from 'react-native-elements';
 import { inject, observer } from 'mobx-react';
 import {
-  StyleSheet, ActivityIndicator, View, Dimensions, Animated, PanResponder,
+  StyleSheet, ActivityIndicator, View, Dimensions, Animated, PanResponder, FlatList,
 } from 'react-native';
 import MovieItem from './MovieItem';
 import AppHeader from '../../shared/AppHeader';
 
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 @inject('moviesPageStore', 'userStore')
 @observer
 class MoviesScreen extends React.Component {
-  constructor() {
-    super();
-
-    this.position = new Animated.ValueXY();
-    this.state = {
-      currentIndex: 0,
-    };
-
-
-    this.translateSwipe = {
-      transform: [...this.position.getTranslateTransform()],
-    };
-
-    this.nextCardOpacityScale = this.position.x.interpolate({
-      inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-      outputRange: [1, 0.7, 1],
-      extrapolate: 'clamp',
-    });
-  }
-
-
-  componentWillMount() {
-    this.PanResponder = PanResponder.create({
-
-      onStartShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderMove: (evt, gestureState) => {
-        this.position.setValue({ x: gestureState.dx, y: 0 });
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx > 120) {
-          Animated.spring(this.position, {
-            toValue: { x: SCREEN_WIDTH + 100, y: 0 },
-          }).start(() => {
-            this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-              this.position.setValue({ x: 0, y: 0 });
-            });
-          });
-        } else if (gestureState.dx < -120) {
-          Animated.spring(this.position, {
-            toValue: { x: -SCREEN_WIDTH - 100, y: 0 },
-          }).start(() => {
-            this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-              this.position.setValue({ x: 0, y: 0 });
-            });
-          });
-        } else {
-          Animated.spring(this.position, {
-            toValue: { x: 0, y: 0 },
-            friction: 4,
-          }).start();
-        }
-      },
-    });
-  }
-
   componentDidMount() {
     this.props.moviesPageStore.getMovies();
     this.props.userStore.getUserFromStore();
   }
 
-  nextPage = () => {
-    this.setState({ currentIndex: 0 });
-    this.props.moviesPageStore.nextPage();
-  }
-
-  prevPage = () => {
-    this.setState({ currentIndex: 0 });
-    this.props.moviesPageStore.prevPage();
-  }
-
-  renderMovies = () => this.props.moviesPageStore.movies.map((item, i) => {
-    if (i === this.state.currentIndex) {
-      return (
-        <Animated.View
-          {...this.PanResponder.panHandlers}
-          key={item.id}
-          style={[this.translateSwipe, {
-            height: SCREEN_HEIGHT - 120,
-            width: SCREEN_WIDTH,
-            padding: 10,
-            position: 'absolute',
-          }]}
-        >
-          <MovieItem item={item} />
-        </Animated.View>
-      );
-    }
-    if (this.state.currentIndex + 1 === i) {
-      return (
-        <Animated.View
-          {...this.PanResponder.panHandlers}
-          key={item.id}
-
-          style={[{
-            opacity: this.nextCardOpacityScale,
-            transform: [{ scale: this.nextCardOpacityScale }],
-            height: SCREEN_HEIGHT - 120,
-            width: SCREEN_WIDTH,
-            padding: 10,
-            position: 'absolute',
-          }]}
-        >
-          <MovieItem item={item} />
-        </Animated.View>
-      );
-    }
-  }).reverse()
-
   render() {
     const {
       moviesPageStore: {
-        page, isLoading, onClearFilters,
+        page, isLoading, onClearFilters, movies, nextPage, prevPage,
       },
     } = this.props;
 
@@ -137,9 +36,17 @@ class MoviesScreen extends React.Component {
           {isLoading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : (
-            <View>
-              {this.renderMovies()}
-            </View>
+            <AnimatedFlatList
+              style={{ width: SCREEN_WIDTH }}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled
+              scrollEventThrottle={16}
+              data={movies}
+              keyExtractor={item => String(item.id)}
+              renderItem={({ item }) => (
+                <MovieItem item={item} />)}
+            />
 
           )}
         </View>
@@ -159,7 +66,7 @@ class MoviesScreen extends React.Component {
           <Button
             icon={{ name: 'arrow-left', type: 'font-awesome' }}
             style={styles.paginationButton}
-            onPress={this.prevPage}
+            onPress={prevPage}
             title="Previous"
             disabled={page === 1}
             buttonStyle={{
@@ -170,7 +77,7 @@ class MoviesScreen extends React.Component {
           <Button
             icon={{ name: 'arrow-right', type: 'font-awesome' }}
             style={styles.paginationButton}
-            onPress={this.nextPage}
+            onPress={nextPage}
             title="Next"
             buttonStyle={{
               borderRadius: 20, width: 130,
