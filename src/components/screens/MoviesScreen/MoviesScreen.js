@@ -119,7 +119,6 @@ class MoviesScreen extends React.Component {
         </Animated.View>
       );
     }
-
   }).reverse()
 
   render() {

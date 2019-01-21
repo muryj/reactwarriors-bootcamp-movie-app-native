@@ -48,7 +48,7 @@ class UserStore {
   };
 
   @action
-  getUser = async () => {
+  getSessionId = async () => {
     let session_id = '';
     try {
       session_id = await AsyncStorage.getItem('session_id') || 'none';
@@ -61,7 +61,7 @@ class UserStore {
 
   @action
    getUserFromStore = async () => {
-     const session_id = await this.getUser();
+     const session_id = await this.getSessionId();
      CallApi.get('/account', {
        params: {
          session_id,
