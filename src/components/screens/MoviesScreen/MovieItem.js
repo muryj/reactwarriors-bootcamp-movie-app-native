@@ -3,7 +3,7 @@ import {
   Card, Button, Icon,
 } from 'react-native-elements';
 import {
-  View, Image, StyleSheet, Dimensions,
+  View, Image, StyleSheet, Dimensions, Animated,
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -15,28 +15,32 @@ class MovieItem extends React.Component {
       <View
         style={styles.constainer}
       >
-        <Card
-          title={item.title}
-          borderRadius={20}
+        <Animated.View
+          style={this.props.style}
         >
-          <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={{ uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}` }}
-          />
+          <Card
+            title={item.title}
+            borderRadius={20}
+          >
+            <Image
+              style={styles.image}
+              resizeMode="cover"
+              source={{ uri: `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}` }}
+            />
 
 
-          <Button
+            <Button
 
-            icon={<Icon name="visibility" color="#ffffff" />}
-            backgroundColor="#03A9F4"
-            buttonStyle={{
-              borderRadius: 10,
-            }}
-            title="Детально"
-          />
+              icon={<Icon name="visibility" color="#ffffff" />}
+              backgroundColor="#03A9F4"
+              buttonStyle={{
+                borderRadius: 10,
+              }}
+              title="Детально"
+            />
 
-        </Card>
+          </Card>
+        </Animated.View>
       </View>
     );
   }
