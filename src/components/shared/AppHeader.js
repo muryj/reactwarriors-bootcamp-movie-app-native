@@ -9,19 +9,18 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 @inject('userStore', 'moviesPageStore')
 @observer
 class AppHeader extends React.Component {
-  menu = null;
+  constructor() {
+    super();
+    this.menuRef = React.createRef();
+  }
 
-  setMenuRef = (ref) => {
-    this.menu = ref;
-  };
-
-  Logout = () => {
-    this.menu.hide();
+  logout = () => {
+    this.menuRef.current.hide();
     this.props.userStore.onLogout();
   };
 
   showMenu = () => {
-    this.menu.show();
+    this.menuRef.current.show();
   };
 
   render() {
@@ -68,15 +67,14 @@ class AppHeader extends React.Component {
                 uri: `https://secure.gravatar.com/avatar/${
                   user.avatar.gravatar.hash
                 }.jpg?s=64"`,
-
               }}
               style={styles.loginImage}
             />
             <Menu
-              ref={this.setMenuRef}
+              ref={this.menuRef}
               button={<Text />}
             >
-              <MenuItem onPress={this.Logout}>Logout</MenuItem>
+              <MenuItem onPress={this.logout}>Logout</MenuItem>
             </Menu>
           </TouchableOpacity>
         ) || (

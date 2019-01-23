@@ -64,7 +64,6 @@ class LoginStore {
   };
 
 
-
   @action
   chainPromises = () => {
     let session_id = null;
